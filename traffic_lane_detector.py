@@ -153,19 +153,18 @@ if __name__ == '__main__':
     #img = cv2.imread('record/frame0000.jpg')
     img = bridge.imgmsg_to_cv2(image_message, desired_encoding="passthrough")
 
-
     turn = main(img)
 
     os.system('roslaunch basic_launch dbw_joystick.launch')
     os.system('rostopic true /pacmod/as_rx/enable')
 
     if turn == -1:
-        #os.system('ls -l')
+        print('Turn left.')
         os.system('rostopic -0.5 as_rx / turn_cmd')
 
     elif turn == 1:
         print('Turn right.')
         os.system('rostopic 0.5 as_rx / turn_cmd')
     else:
-        os.system('rostopic 0 as_rx / turn_cmd')
         print('No turn.')
+        os.system('rostopic 0 as_rx / turn_cmd')
